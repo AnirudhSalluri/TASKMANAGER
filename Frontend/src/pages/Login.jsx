@@ -23,49 +23,65 @@ const Login = () => {
       toast.error(error.data.message);
     }
         
-    }
-    const registercall =()=>{
-        navigate("/register")
-    }
+  }
+  const registercall =()=> {
+    navigate("/register")
+  }
 
   return (
-    <div  className=' bg-amber-50 h-screen  flex flex-row  items-center '>
+    <div className="bg-amber-50 h-screen flex items-center justify-center">
 
-      <div style={{ backgroundImage: "url('/image.png')" }} className='opacity-80 bg-cover bg-center  w-1/2 h-screen'>
-        
-      </div>
+      {/* Left image section */}
+      <div 
+        style={{ backgroundImage: "url('/image.png')" }} 
+        className="opacity-80 bg-cover bg-center w-full md:w-1/2 h-full hidden md:block"
+      ></div>
       
-    <div className='bg-neutral-50 w-1/2 h-screen   shadow-2xl p-20   flex flex-col gap-y-5  items-center justify-center ' >
-    <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Log in</h2>
-    <form className=' items-center flex flex-col gap-3.5 bg-blue-50 p-10 rounded-3xl shadow-2xl w-full ' onSubmit={handleSubmit(onSubmit)}>
-    
-      <Textbox
-
-      name="email"
-      placeholder="Enter Your Email"
-      type="email"
-      register={register("email",{required : "Email is required"})}
-      error={errors.email?errors.email.message:""}
+      {/* Right login form section */}
+      <div className="bg-neutral-50 w-full md:w-1/2 h-full shadow-2xl p-6 sm:p-10 md:p-20 flex flex-col gap-y-5 items-center justify-center">
         
-        />
+        <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Log in</h2>
+        
+        <form 
+          className="flex flex-col gap-6 bg-blue-50 p-6 sm:p-10 rounded-3xl shadow-2xl w-full max-w-lg mx-auto" 
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Textbox
+            name="email"
+            placeholder="Enter Your Email"
+            type="email"
+            register={register("email", { required: "Email is required" })}
+            error={errors.email ? errors.email.message : ""}
+          />
 
-        <Textbox
-
-      name="password"
-      placeholder="Enter Your Password"
-      type="password"
-      register={register("password",{required : "Password is required"})}
-      error={errors.password?errors.password.message:""}
-        />
-        <span>Don't have an accout? <span className='underline text-blue-500 cursor-pointer' onClick={registercall}>Register here</span></span>
-        {isLoading?<span>Loading..</span>:<Button
-        type="submit"
-        tag="Log in"
-        />}
+          <Textbox
+            name="password"
+            placeholder="Enter Your Password"
+            type="password"
+            register={register("password", { required: "Password is required" })}
+            error={errors.password ? errors.password.message : ""}
+          />
+          
+          <div className="text-center text-sm mt-2">
+            <span>Don't have an account? 
+              <span 
+                className="underline text-blue-500 cursor-pointer" 
+                onClick={registercall}
+              >
+                Register here
+              </span>
+            </span>
+          </div>
+          
+          {isLoading ? (
+            <span className="text-center">Loading...</span>
+          ) : (
+            <Button type="submit" tag="Log in" />
+          )}
         </form>
-        <ToastContainer/>
-    </div>
-    
+        
+        <ToastContainer />
+      </div>
     </div>
   )
 }
