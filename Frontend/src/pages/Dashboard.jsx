@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import {
   MdAdminPanelSettings,
   MdKeyboardArrowDown,
@@ -22,7 +22,7 @@ const ICONS = {
 
 const TaskTable = ({ tasks }) => (
   <div className="w-full md:w-2/3 bg-white p-4 shadow-md rounded-md">
-    <table className="w-full">
+    <table className="w-full table-auto">
       <thead className="border-b border-gray-300">
         <tr className="text-left text-gray-700">
           <th className="py-2">Task Title</th>
@@ -33,18 +33,17 @@ const TaskTable = ({ tasks }) => (
       </thead>
       <tbody>
         {tasks.map((task, id) => (
-          <tr key={id} className=" border-b border-gray-200 hover:bg-gray-100 ">
-          <td>{task.title}</td>
-          <td>{task.priority}</td>
-          <td className="flex gap-2">
-              {task.team.map((i)=>(
-                <span className="bg-blue-400  text-amber-100 rounded-full p-2 -mx-2 ">
-                {getInitials(i.name)}
+          <tr key={id} className="border-b border-gray-200 hover:bg-gray-100">
+            <td>{task.title}</td>
+            <td>{task.priority}</td>
+            <td className="flex gap-2">
+              {task.team.map((i) => (
+                <span className="bg-blue-400 text-amber-100 rounded-full p-2 -mx-2">
+                  {getInitials(i.name)}
                 </span>
-
-                ))}
+              ))}
             </td>
-          <td>{moment(task.date).fromNow()}</td>
+            <td>{moment(task.date).fromNow()}</td>
           </tr>
         ))}
       </tbody>
@@ -54,7 +53,7 @@ const TaskTable = ({ tasks }) => (
 
 const UserTable = ({ users }) => (
   <div className="w-full md:w-1/3 bg-white p-4 shadow-md rounded-md">
-    <table className="w-full">
+    <table className="w-full table-auto">
       <thead className="border-b border-gray-300">
         <tr className="text-left text-gray-700">
           <th className="py-2">Full Name</th>
@@ -108,26 +107,26 @@ const Card = ({ label, count, bg, icon }) => (
 );
 
 const Dashboard = () => {
-  const {data:tasks=[],isLoading}=useGetTasksQuery({
-    stage:"",
-    isTrashed:"",
-  })
+  const { data: tasks = [], isLoading } = useGetTasksQuery({
+    stage: "",
+    isTrashed: "",
+  });
 
-  
-  const totals = tasks?.tasks||[];
+  const totals = tasks?.tasks || [];
   const stats = [
     { label: "TOTAL TASK", total: totals?.length || 0, icon: <FaNewspaper />, bg: "bg-blue-600" },
     { label: "COMPLETED TASK", total: totals["completed"] || 0, icon: <MdAdminPanelSettings />, bg: "bg-teal-700" },
     { label: "TASK IN PROGRESS", total: totals["in progress"] || 0, icon: <FaNewspaper />, bg: "bg-yellow-500" },
     { label: "TODOS", total: totals["todo"], icon: <FaArrowsToDot />, bg: "bg-pink-700" },
   ];
-  useEffect(()=>{
-    console.log(tasks)
-  },[])
+
+  useEffect(() => {
+    console.log(tasks);
+  }, []);
 
   return (
-    <div className="h-full py-4">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+    <div className="h-full py-4 px-4 md:px-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
         {stats.map(({ icon, bg, label, total }, index) => (
           <Card key={index} icon={icon} bg={bg} label={label} count={total} />
         ))}
@@ -139,8 +138,12 @@ const Dashboard = () => {
       </div>
 
       <div className="w-full flex flex-col md:flex-row gap-4 py-8">
-        <TaskTable tasks={summary.last10Task} />
-        <UserTable users={summary.users} />
+        <div className="w-full overflow-x-auto">
+          <TaskTable tasks={summary.last10Task} />
+        </div>
+        <div className="w-full overflow-x-auto">
+          <UserTable users={summary.users} />
+        </div>
       </div>
     </div>
   );
