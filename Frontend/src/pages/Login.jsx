@@ -31,7 +31,7 @@ const Login = () => {
   return (
     <div  className=' bg-amber-50 h-screen  flex flex-row  items-center '>
 
-      <div style={{ backgroundImage: "url('/public/42.jpg')" }} className='opacity-80 bg-cover bg-center  w-1/2 h-screen'>
+      <div style={{ backgroundImage: "url('/image.png')" }} className='opacity-80 bg-cover bg-center  w-1/2 h-screen'>
         
       </div>
       
