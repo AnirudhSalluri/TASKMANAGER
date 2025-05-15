@@ -21,32 +21,36 @@ function App() {
     } 
   })
 
-    function Layout(){
-     
-      const location = useLocation();
+  function Layout() {
+  const location = useLocation();
+  const { user, isSidebarOpen } = useSelector((state) => state.auth);
 
-      return user?
-      (
-        <div className="flex  flex-row" >
-          <div className="z-4">
-          <Navbar  />
-          </div>
-          <div className={` flex flex-col flex-1 ${isSidebarOpen?"ml-64":"ml-18"}`} >
-            <div className={`z-4 fixed bg-blue-50  transition-all duration-300 
-                     ${isSidebarOpen ? "w-[calc(100%-16rem)]" : "w-[calc(100%-4.5rem)]"}`}>
-          <TopNav/>
-          </div>
-          <div className="p-4 flex-1 mt-16"><Outlet /></div>
-          </div> 
+  return user ? (
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
+      <Navbar />
+
+      {/* Main content with margin based on sidebar state */}
+      <div
+        className={`flex-1 transition-all duration-300
+          ${isSidebarOpen ? "ml-64" : "ml-18"}`}
+      >
+        {/* Fixed TopNav */}
+        <div className="fixed top-0 left-0 right-0 bg-blue-50 z-10 p-4">
+          <TopNav />
         </div>
-      )
-      :
-      (
-        <Navigate to="/log-in" state={{from:location}} replace/>
-      );
 
+        {/* Content padding to avoid topnav overlap */}
+        <div className="pt-16 p-4">
+          <Outlet />
+        </div>
+      </div>
+    </div>
+  ) : (
+    <Navigate to="/log-in" state={{ from: location }} replace />
+  );
+}
 
-    }
 
   return (
     <>
